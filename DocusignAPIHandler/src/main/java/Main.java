@@ -1,21 +1,14 @@
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
+import com.docusign.esign.client.ApiException;
+import org.apache.oltu.oauth2.common.exception.OAuthSystemException;
+import org.json.simple.parser.ParseException;
+import java.io.IOException;
 import java.sql.SQLException;
 
 public class Main {
 
-    public static void main(String[] args) throws SQLException, ClassNotFoundException {
-
-        Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
-
-        Connection conn = DriverManager.getConnection("jdbc:ucanaccess://G://codeRepository//WeldLoggerPro Project//WeldMaterialControlLog_be.accdb");
-
-        ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM WELD_JOB WHERE JOB_ID = " + args[0]);
-        rs.next();
-
-        System.out.println(rs.getString("WELDER_CLOCK_NUM"));
-
-        conn.close();
+    public static void main(String[] args) throws IOException, ParseException, SQLException, ClassNotFoundException, OAuthSystemException, ApiException {
+        new AppConfiguration(args[0], Integer.parseInt(args[1]), args[2]);
+        RequestFactory requestFactory = new RequestFactory();
+        requestFactory.requestEmail();
     }
 }

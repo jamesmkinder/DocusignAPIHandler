@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="DocusignAPIHandler:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/DocusignAPIHandler_jar</output-path>
+    <root id="archive" name="DocusignAPIHandler.jar">
+      <element id="module-output" name="DocusignAPIHandler" />
+    </root>
+  </artifact>
+</component>

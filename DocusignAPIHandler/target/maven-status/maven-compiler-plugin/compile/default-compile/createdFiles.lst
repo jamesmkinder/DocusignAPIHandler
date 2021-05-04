@@ -1,0 +1,10 @@
+AppConfiguration.class
+Main.class
+JWTGrantGetter.class
+RequestFactory.class
+WeldProcessReportJWTGrantGetter.class
+EmailRequest.class
+EnvelopeHelpers.class
+TestBench.class
+WeldProcessReportRequest.class
+ConnectionHandler.class
