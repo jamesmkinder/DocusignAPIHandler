@@ -3,6 +3,8 @@ import org.apache.oltu.oauth2.common.exception.OAuthSystemException;
 import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -11,7 +13,7 @@ import java.sql.SQLException;
 public class TestBench {
     //Proof of concept test code.
 
-    public static void main(String[] args) throws SQLException, ClassNotFoundException, IOException, ParseException, OAuthSystemException, ApiException {
+    public static void main(String[] args) throws SQLException, ClassNotFoundException, IOException, ParseException, OAuthSystemException, ApiException, InvalidKeySpecException, NoSuchAlgorithmException {
 
 /*
         Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");

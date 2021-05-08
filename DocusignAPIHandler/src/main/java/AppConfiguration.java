@@ -16,6 +16,8 @@ public class AppConfiguration {
     private String userID;
     private String APIAccountID;
     private String basePath;
+    private String rsaPublic;
+    private String rsaPrivate;
 
     private AppConfiguration(){}
 
@@ -42,6 +44,8 @@ public class AppConfiguration {
         appConfiguration.setUserID((String) jsonObject.get("APIUsername"));
         appConfiguration.setAPIAccountID((String) jsonObject.get("AccountID"));
         appConfiguration.setBasePath((String) jsonObject.get("BasePath"));
+        appConfiguration.setRsaPrivate((String) jsonObject.get("RSAPrivate"));
+        appConfiguration.setRsaPublic((String) jsonObject.get("RSAPublic"));
         appConfiguration.setFileName(fileName);
     }
 
@@ -79,6 +83,22 @@ public class AppConfiguration {
 
     private void setAppName(String appName) {
         this.appName = appName;
+    }
+
+    public void setRsaPrivate(String rsaPrivate) {
+        this.rsaPrivate = rsaPrivate;
+    }
+
+    public static String getRsaPrivate() {
+        return appConfiguration.rsaPrivate;
+    }
+
+    private void setRsaPublic(String rsaPublic){
+        this.rsaPublic = rsaPublic;
+    }
+
+    public static String getRsaPublic(){
+        return appConfiguration.rsaPublic;
     }
 
     public static String getIk() {
