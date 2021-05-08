@@ -1,6 +1,5 @@
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -20,7 +19,7 @@ public class WeldProcessReportJWTGrantGetter implements JWTGrantGetter{
     public WeldProcessReportJWTGrantGetter() {}
 
     @Override
-    public String getToken() throws IOException, ParseException {
+    public String getToken() throws IOException {
         String accessToken = null;
 
             JWT jwt = new JWT(AppConfiguration.getRsaPrivate(), AppConfiguration.getIk(), AppConfiguration.getUserID(), AppConfiguration.getBasePath(), "signature impersonation extended");
@@ -50,8 +49,13 @@ public class WeldProcessReportJWTGrantGetter implements JWTGrantGetter{
             String jsonResponseString = new BufferedReader(new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8)).lines().collect(Collectors.joining("\n"));
 
             JSONParser parser = new JSONParser();
-            JSONObject jsonObject = (JSONObject) parser.parse(jsonResponseString);
-            accessToken = (String) jsonObject.get("access_token");
+            try{
+                JSONObject jsonObject = (JSONObject) parser.parse(jsonResponseString);
+                accessToken = (String) jsonObject.get("access_token");
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
             System.out.println(accessToken);
 
         return accessToken;

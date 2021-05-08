@@ -1,20 +1,10 @@
+import com.docusign.esign.model.*;
+
 import java.io.IOException;
-import java.io.StringWriter;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Base64;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
-
-import com.docusign.esign.model.CarbonCopy;
-import com.docusign.esign.model.Document;
-import com.docusign.esign.model.Recipients;
-import com.docusign.esign.model.SignHere;
-import com.docusign.esign.model.Signer;
-import com.docusign.esign.model.Tabs;
 
 /**
  * Utility class to create objects related to envelope.

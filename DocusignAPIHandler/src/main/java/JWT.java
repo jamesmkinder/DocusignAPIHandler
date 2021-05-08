@@ -1,3 +1,6 @@
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+
 import java.security.KeyFactory;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
@@ -5,10 +8,6 @@ import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.util.Base64;
 import java.util.Map;
-
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import org.bouncycastle.util.io.pem.PemReader;
 
 public class JWT {
 

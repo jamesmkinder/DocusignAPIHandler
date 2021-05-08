@@ -2,7 +2,6 @@ import com.docusign.esign.api.EnvelopesApi;
 import com.docusign.esign.client.ApiClient;
 import com.docusign.esign.client.ApiException;
 import com.docusign.esign.model.*;
-import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
@@ -19,7 +18,7 @@ public class WeldProcessReportRequest implements EmailRequest{
     private static final String SUPERVISOR_ANCHOR_OFFSET_X = "20";
 
     @Override
-    public void requestEmail() throws SQLException, ClassNotFoundException, IOException, ApiException, InvalidKeySpecException, NoSuchAlgorithmException, ParseException {
+    public void requestEmail() throws SQLException, ClassNotFoundException, IOException, ApiException, InvalidKeySpecException, NoSuchAlgorithmException {
 
         ResultSet rsWelder = ConnectionHandler.runSQL("SELECT FIRST_INIT & ', ' & LAST_NAME, EMAIL, SUPERVISOR FROM WELDERS INNER JOIN WELD_JOB ON WELD_JOB.WELDER_CLOCK_NUM = WELDERS.WELDER_CLOCK_NUM WHERE JOB_ID = " + AppConfiguration.getReportPK());
         rsWelder.next();

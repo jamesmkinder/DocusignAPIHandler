@@ -1,3 +1,6 @@
+WeldProcessReportRequest.class
+ConnectionHandler.class
+JWT.class
 AppConfiguration.class
 Main.class
 JWTGrantGetter.class
@@ -6,5 +9,4 @@ WeldProcessReportJWTGrantGetter.class
 EmailRequest.class
 EnvelopeHelpers.class
 TestBench.class
-WeldProcessReportRequest.class
-ConnectionHandler.class
+PemUtils.class

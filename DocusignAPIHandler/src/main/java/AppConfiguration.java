@@ -1,9 +1,8 @@
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+
 import java.io.File;
 import java.io.FileReader;
-import java.io.IOException;
 
 public class AppConfiguration {
     private static AppConfiguration appConfiguration;
@@ -21,14 +20,14 @@ public class AppConfiguration {
 
     private AppConfiguration(){}
 
-    public AppConfiguration(String appName, int reportPK, String fileName) throws IOException, ParseException {
+    public AppConfiguration(String appName, int reportPK, String fileName) {
         if(appConfiguration == null) {
             appConfiguration = new AppConfiguration();
             configure(appName, reportPK, fileName, appConfiguration);
         }
     }
 
-    private void configure(String appName, int reportPK, String fileName, AppConfiguration appConfiguration) throws IOException, ParseException {
+    private void configure(String appName, int reportPK, String fileName, AppConfiguration appConfiguration) {
         appConfiguration.setAppName(appName);
         appConfiguration.setReportPK(reportPK);
         JSONParser parser = new JSONParser();
@@ -36,17 +35,22 @@ public class AppConfiguration {
         String url = String.valueOf(classLoader.getResource("Configs/" + appName + ".json"));
         url = url.substring(6);
         File file = new File(url);
-        Object obj = parser.parse(new FileReader(file));
-        JSONObject jsonObject = (JSONObject) obj;
-        appConfiguration.setIK((String) jsonObject.get("IK"));
-        appConfiguration.setSecretKey((String) jsonObject.get("SecretKey"));
-        appConfiguration.setRedirectURI((String) jsonObject.get("Redirect"));
-        appConfiguration.setUserID((String) jsonObject.get("APIUsername"));
-        appConfiguration.setAPIAccountID((String) jsonObject.get("AccountID"));
-        appConfiguration.setBasePath((String) jsonObject.get("BasePath"));
-        appConfiguration.setRsaPrivate((String) jsonObject.get("RSAPrivate"));
-        appConfiguration.setRsaPublic((String) jsonObject.get("RSAPublic"));
-        appConfiguration.setFileName(fileName);
+        try{
+            Object obj = parser.parse(new FileReader(file));
+            JSONObject jsonObject = (JSONObject) obj;
+            appConfiguration.setIK((String) jsonObject.get("IK"));
+            appConfiguration.setSecretKey((String) jsonObject.get("SecretKey"));
+            appConfiguration.setRedirectURI((String) jsonObject.get("Redirect"));
+            appConfiguration.setUserID((String) jsonObject.get("APIUsername"));
+            appConfiguration.setAPIAccountID((String) jsonObject.get("AccountID"));
+            appConfiguration.setBasePath((String) jsonObject.get("BasePath"));
+            appConfiguration.setRsaPrivate((String) jsonObject.get("RSAPrivate"));
+            appConfiguration.setRsaPublic((String) jsonObject.get("RSAPublic"));
+            appConfiguration.setFileName(fileName);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
     }
 
     private void setFileName(String fileName) {
