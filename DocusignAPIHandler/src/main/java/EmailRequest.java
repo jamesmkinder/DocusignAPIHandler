@@ -1,6 +1,7 @@
 import com.docusign.esign.client.ApiException;
 import com.docusign.esign.model.Envelope;
 import org.apache.oltu.oauth2.common.exception.OAuthSystemException;
+import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
@@ -8,5 +9,5 @@ import java.security.spec.InvalidKeySpecException;
 import java.sql.SQLException;
 
 public interface EmailRequest {
-    public void requestEmail() throws SQLException, ClassNotFoundException, IOException, OAuthSystemException, ApiException, InvalidKeySpecException, NoSuchAlgorithmException;
+    public void requestEmail() throws SQLException, ClassNotFoundException, IOException, OAuthSystemException, ApiException, InvalidKeySpecException, NoSuchAlgorithmException, ParseException;
 }
