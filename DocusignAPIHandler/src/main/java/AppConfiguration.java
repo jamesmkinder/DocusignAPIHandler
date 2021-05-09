@@ -1,8 +1,9 @@
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
-import java.io.File;
-import java.io.FileReader;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.util.stream.Collectors;
 
 public class AppConfiguration {
     private static AppConfiguration appConfiguration;
@@ -17,6 +18,7 @@ public class AppConfiguration {
     private String basePath;
     private String rsaPublic;
     private String rsaPrivate;
+    private String database;
 
     private AppConfiguration(){}
 
@@ -28,15 +30,18 @@ public class AppConfiguration {
     }
 
     private void configure(String appName, int reportPK, String fileName, AppConfiguration appConfiguration) {
+
         appConfiguration.setAppName(appName);
         appConfiguration.setReportPK(reportPK);
         JSONParser parser = new JSONParser();
         ClassLoader classLoader = getClass().getClassLoader();
-        String url = String.valueOf(classLoader.getResource("Configs/" + appName + ".json"));
-        url = url.substring(6);
-        File file = new File(url);
+        InputStream inputStream = classLoader.getResourceAsStream(appName + ".JSON");
+        if (inputStream == null){
+            throw new IllegalArgumentException("file not found." + appName + ".JSON");
+        }
+        String json = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8)).lines().collect(Collectors.joining("\n"));
         try{
-            Object obj = parser.parse(new FileReader(file));
+            Object obj = parser.parse(json);
             JSONObject jsonObject = (JSONObject) obj;
             appConfiguration.setIK((String) jsonObject.get("IK"));
             appConfiguration.setSecretKey((String) jsonObject.get("SecretKey"));
@@ -46,6 +51,7 @@ public class AppConfiguration {
             appConfiguration.setBasePath((String) jsonObject.get("BasePath"));
             appConfiguration.setRsaPrivate((String) jsonObject.get("RSAPrivate"));
             appConfiguration.setRsaPublic((String) jsonObject.get("RSAPublic"));
+            appConfiguration.setDatabase((String) jsonObject.get("Database"));
             appConfiguration.setFileName(fileName);
         }catch (Exception e){
             e.printStackTrace();
@@ -95,6 +101,14 @@ public class AppConfiguration {
 
     public static String getRsaPrivate() {
         return appConfiguration.rsaPrivate;
+    }
+
+    private void setDatabase(String database){
+        this.database = database;
+    }
+
+    public static String getDatabase(){
+        return appConfiguration.database;
     }
 
     private void setRsaPublic(String rsaPublic){

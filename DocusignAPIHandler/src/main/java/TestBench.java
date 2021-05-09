@@ -1,6 +1,5 @@
 import com.docusign.esign.client.ApiException;
 import org.apache.oltu.oauth2.common.exception.OAuthSystemException;
-import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
@@ -17,8 +16,3 @@ public class TestBench {
         requestFactory.requestEmail();
     }
 }
-
-
-/*
-cmd.exe /S /C cd\ && G: && cd codeRepository\WeldLoggerProProject\DocusignAPIHandler\target\ && java -jar DocusignAPIHandler-1.0-SNAPSHOT.jar WeldProcessReport 699 "G:\codeRepository\WeldLoggerProProjectSC Weld Reports - -  -  - Geet(699).pdf"
- */

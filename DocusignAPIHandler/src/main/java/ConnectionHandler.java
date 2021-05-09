@@ -7,7 +7,7 @@ public class ConnectionHandler {
 
     public static ResultSet runSQL(String SQL) throws SQLException, ClassNotFoundException {
         Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
-        Connection conn = DriverManager.getConnection("jdbc:ucanaccess://G://codeRepository//WeldLoggerProProject//WeldMaterialControlLog_be.accdb");
+        Connection conn = DriverManager.getConnection(AppConfiguration.getDatabase());
         ResultSet rs = conn.createStatement().executeQuery(SQL);
         conn.close();
         return rs;
