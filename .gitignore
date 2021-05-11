@@ -1,3 +1,4 @@
+*.json
 *.pdf
 *.accdb
 Welding*Material*Control*Logs/**
