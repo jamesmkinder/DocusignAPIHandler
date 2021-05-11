@@ -1,9 +1,11 @@
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.stream.Collectors;
+import javax.swing.JOptionPane;
 
 public class AppConfiguration {
     private static AppConfiguration appConfiguration;
@@ -37,25 +39,26 @@ public class AppConfiguration {
         ClassLoader classLoader = getClass().getClassLoader();
         InputStream inputStream = classLoader.getResourceAsStream(appName + ".JSON");
         if (inputStream == null){
-            throw new IllegalArgumentException("file not found." + appName + ".JSON");
+            JOptionPane.showMessageDialog(null, "Could not locate the JSON file needed to configure this application.  Please notify James Kinder if you get this error.");
         }
         String json = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8)).lines().collect(Collectors.joining("\n"));
-        try{
-            Object obj = parser.parse(json);
-            JSONObject jsonObject = (JSONObject) obj;
-            appConfiguration.setIK((String) jsonObject.get("IK"));
-            appConfiguration.setSecretKey((String) jsonObject.get("SecretKey"));
-            appConfiguration.setRedirectURI((String) jsonObject.get("Redirect"));
-            appConfiguration.setUserID((String) jsonObject.get("APIUsername"));
-            appConfiguration.setAPIAccountID((String) jsonObject.get("AccountID"));
-            appConfiguration.setBasePath((String) jsonObject.get("BasePath"));
-            appConfiguration.setRsaPrivate((String) jsonObject.get("RSAPrivate"));
-            appConfiguration.setRsaPublic((String) jsonObject.get("RSAPublic"));
-            appConfiguration.setDatabase((String) jsonObject.get("Database"));
-            appConfiguration.setFileName(fileName);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
+    try {
+        Object obj = parser.parse(json);
+        JSONObject jsonObject = (JSONObject) obj;
+        appConfiguration.setIK((String) jsonObject.get("IK"));
+        appConfiguration.setSecretKey((String) jsonObject.get("SecretKey"));
+        appConfiguration.setRedirectURI((String) jsonObject.get("Redirect"));
+        appConfiguration.setUserID((String) jsonObject.get("APIUsername"));
+        appConfiguration.setAPIAccountID((String) jsonObject.get("AccountID"));
+        appConfiguration.setBasePath((String) jsonObject.get("BasePath"));
+        appConfiguration.setRsaPrivate((String) jsonObject.get("RSAPrivate"));
+        appConfiguration.setRsaPublic((String) jsonObject.get("RSAPublic"));
+        appConfiguration.setDatabase((String) jsonObject.get("Database"));
+        appConfiguration.setFileName(fileName);
+    } catch (ParseException e){
+        JOptionPane.showMessageDialog(null, "The JSON file used to configure this application could not be parsed.  Please update the JSON file and try again.");
+        System.exit(1);
+    }
 
     }
 

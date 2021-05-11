@@ -12,10 +12,10 @@ import java.util.Map;
 public class JWT {
 
     private String privateKey;
-    private String iss;
-    private String sub;
-    private String aud;
-    private String scope;
+    private final String iss;
+    private final String sub;
+    private final String aud;
+    private final String scope;
 
 
     public JWT(String privateKey, String iss, String sub, String aud, String scope) {
