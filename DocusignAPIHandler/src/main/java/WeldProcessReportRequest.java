@@ -72,11 +72,13 @@ public class WeldProcessReportRequest implements EmailRequest{
         apiClient.setAccessToken(jwt.getToken(), (long) 3600);
         apiClient.addDefaultHeader("User-Agent", "Swagger-Codegen/3.11.0-RC2/java");
         EnvelopesApi envelopesApi = new EnvelopesApi(apiClient);
+        /*
         try {
             envelopesApi.createEnvelope(AppConfiguration.getAPIAccountID(), envelope);
         } catch (ApiException e) {
             JOptionPane.showMessageDialog(null, "An error has occurred: API exception, envelope was not sent. This most likely means that the welder or supervisor does not have an email address set.");
             System.exit(1);
         }
+         */
     }
 }
