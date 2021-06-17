@@ -3,7 +3,7 @@ public class TestBench {
 
     public static void main(String[] args) {
 
-        new AppConfiguration("WeldProcessReport", 699, "G:\\codeRepository\\WeldLoggerProProjectSC Weld Reports - -  -  - Geet(699).pdf");
+        new AppConfiguration("WeldProcessReport", 699, "G:\\codeRepository\\WeldLoggerProProject\\Weld Process Reports\\FS Weld Reports - -  -  - (97).pdf");
         RequestFactory requestFactory = new RequestFactory();
         requestFactory.requestEmail();
     }

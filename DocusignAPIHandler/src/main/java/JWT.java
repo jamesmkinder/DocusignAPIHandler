@@ -40,8 +40,8 @@ public class JWT {
         claims.put("exp", (System.currentTimeMillis()/1000) + 3600);
         claims.put("scope", scope);
         // strip the headers
-        privateKey = privateKey.replace("-----BEGIN PRIVATE KEY-----", "");
-        privateKey = privateKey.replace("-----END PRIVATE KEY-----", "");
+        privateKey = privateKey.replace("-----BEGIN RSA PRIVATE KEY-----", "");
+        privateKey = privateKey.replace("-----END RSA PRIVATE KEY-----", "");
         privateKey = privateKey.replaceAll("\\s+","");
 
         byte[] encodedKey = Base64.getDecoder().decode(privateKey);
