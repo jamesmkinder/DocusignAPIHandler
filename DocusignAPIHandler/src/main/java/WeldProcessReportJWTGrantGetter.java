@@ -52,6 +52,7 @@ public class WeldProcessReportJWTGrantGetter implements JWTGrantGetter{
             JSONParser parser = new JSONParser();
             try {
                 JSONObject jsonObject = (JSONObject) parser.parse(jsonResponseString);
+
                 accessToken = (String) jsonObject.get("access_token");
             } catch (Exception e) {
                 e.printStackTrace();

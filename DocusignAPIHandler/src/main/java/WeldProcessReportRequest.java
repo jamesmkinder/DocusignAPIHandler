@@ -67,15 +67,18 @@ public class WeldProcessReportRequest implements EmailRequest{
         envelope.setRecipients(EnvelopeHelpers.createRecipients(signers));
         envelope.setStatus("sent");
 
-        ApiClient apiClient = new ApiClient("https://docusign.net/restapi");
+        ApiClient apiClient = new ApiClient("https://na3.docusign.net/restapi");
         JWTGrantGetter jwt = new WeldProcessReportJWTGrantGetter();
         apiClient.setAccessToken(jwt.getToken(), (long) 3600);
         apiClient.addDefaultHeader("User-Agent", "Swagger-Codegen/3.11.0-RC2/java");
         EnvelopesApi envelopesApi = new EnvelopesApi(apiClient);
+
         try {
             envelopesApi.createEnvelope(AppConfiguration.getAPIAccountID(), envelope);
+
         } catch (ApiException e) {
             JOptionPane.showMessageDialog(null, "An error has occurred: API exception, envelope was not sent. This most likely means that the welder or supervisor does not have an email address set.");
+            e.printStackTrace();
             System.exit(1);
         }
 
