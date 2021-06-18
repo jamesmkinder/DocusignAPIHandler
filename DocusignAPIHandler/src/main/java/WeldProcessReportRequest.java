@@ -4,6 +4,7 @@ import com.docusign.esign.client.ApiException;
 import com.docusign.esign.model.*;
 
 import javax.swing.*;
+import java.io.File;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -25,6 +26,7 @@ public class WeldProcessReportRequest implements EmailRequest{
         Signer supervisor = new Signer();
         Tabs supervisorTabs = new Tabs();
         SignHere supervisorSignature = new SignHere();
+        CarbonCopy carbonCopy = new CarbonCopy();
 
 
         ResultSet rsWelder = ConnectionHandler.runSQL("SELECT FIRST_INIT & ', ' & LAST_NAME, EMAIL, SUPERVISOR FROM WELDERS INNER JOIN WELD_JOB ON WELD_JOB.WELDER_CLOCK_NUM = WELDERS.WELDER_CLOCK_NUM WHERE JOB_ID = " + AppConfiguration.getReportPK());
@@ -54,9 +56,14 @@ public class WeldProcessReportRequest implements EmailRequest{
         supervisor.setTabs(supervisorTabs);
         Signer[] signers = {welder, supervisor};
 
+        carbonCopy.setEmail("weldds@flowserve.com");
+        carbonCopy.setName("WeldProductionAccount");
+        carbonCopy.setRecipientId("3");
+        carbonCopy.setRoutingOrder("3");
+
         Document weldProcessReport = null;
         try {
-            weldProcessReport = EnvelopeHelpers.createDocumentFromFile(AppConfiguration.getFileName(), AppConfiguration.getAppName(), "1");
+            weldProcessReport = EnvelopeHelpers.createDocumentFromFile(AppConfiguration.getFileName(), AppConfiguration.getFileName().substring(AppConfiguration.getFileName().lastIndexOf(File.separator) + 1), "1");
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "An error has occurred: the document to be signed could not be loaded for some reason.");
             System.exit(1);
