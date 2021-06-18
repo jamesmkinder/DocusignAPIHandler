@@ -56,8 +56,8 @@ public class WeldProcessReportRequest implements EmailRequest{
         supervisor.setTabs(supervisorTabs);
         Signer[] signers = {welder, supervisor};
 
-        carbonCopy.setEmail("weldds@flowserve.com");
-        carbonCopy.setName("WeldProductionAccount");
+        carbonCopy.setEmail("mkinder@flowserve.com");
+        carbonCopy.setName("Mike Kinder");
         carbonCopy.setRecipientId("3");
         carbonCopy.setRoutingOrder("3");
 
