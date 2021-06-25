@@ -54,12 +54,14 @@ public class WeldProcessReportRequest implements EmailRequest{
         supervisorSignature.setAnchorXOffset(SUPERVISOR_ANCHOR_OFFSET_X);
         supervisorTabs.addSignHereTabsItem(supervisorSignature);
         supervisor.setTabs(supervisorTabs);
-        Signer[] signers = {welder, supervisor};
-
         carbonCopy.setEmail("mkinder@flowserve.com");
         carbonCopy.setName("Mike Kinder");
         carbonCopy.setRecipientId("3");
         carbonCopy.setRoutingOrder("3");
+
+        Signer[] signers = {welder, supervisor};
+
+
 
         Document weldProcessReport = null;
         try {
@@ -71,7 +73,9 @@ public class WeldProcessReportRequest implements EmailRequest{
         EnvelopeDefinition envelope = new EnvelopeDefinition();
         envelope.setEmailSubject("Please Sign This Weld Process Report Docusign Document");
         envelope.setDocuments(Collections.singletonList(weldProcessReport));
-        envelope.setRecipients(EnvelopeHelpers.createRecipients(signers));
+        Recipients recipients = EnvelopeHelpers.createRecipients(signers);
+        recipients.getCarbonCopies().add(carbonCopy);
+        envelope.setRecipients(recipients);
         envelope.setStatus("sent");
 
         ApiClient apiClient = new ApiClient("https://na3.docusign.net/restapi");
@@ -91,3 +95,4 @@ public class WeldProcessReportRequest implements EmailRequest{
 
     }
 }
+
