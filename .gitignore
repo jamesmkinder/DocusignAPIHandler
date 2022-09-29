@@ -1,10 +1,11 @@
+*.json
 *.pdf
 *.accdb
-Welding Material Control Logs/**
-Welder Matrix/**
-Welder Continuity/**
-Weld Process Reports/**
-Reference Documents/**
+Welding*Material*Control*Logs/**
+Welder*Matrix/**
+Welder*Continuity/**
+Weld*Process*Reports/**
+Reference*Documents/**
 Receiving/**
-Previous Versions/**
+Previous*Versions/**
 HTML/**

@@ -27,7 +27,7 @@ public class WeldProcessReportJWTGrantGetter implements JWTGrantGetter{
 
             String jwtString = jwt.encode();
 
-            URL url = new URL("https://account.docusign.com/oauth/token");
+            URL url = new URL("https://account-d.docusign.com/oauth/token");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("POST");
             connection.setDoOutput(true);
@@ -52,7 +52,6 @@ public class WeldProcessReportJWTGrantGetter implements JWTGrantGetter{
             JSONParser parser = new JSONParser();
             try {
                 JSONObject jsonObject = (JSONObject) parser.parse(jsonResponseString);
-
                 accessToken = (String) jsonObject.get("access_token");
             } catch (Exception e) {
                 e.printStackTrace();

@@ -4,7 +4,6 @@ import com.docusign.esign.client.ApiException;
 import com.docusign.esign.model.*;
 
 import javax.swing.*;
-import java.io.File;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -26,7 +25,6 @@ public class WeldProcessReportRequest implements EmailRequest{
         Signer supervisor = new Signer();
         Tabs supervisorTabs = new Tabs();
         SignHere supervisorSignature = new SignHere();
-        CarbonCopy carbonCopy = new CarbonCopy();
 
 
         ResultSet rsWelder = ConnectionHandler.runSQL("SELECT FIRST_INIT & ', ' & LAST_NAME, EMAIL, SUPERVISOR FROM WELDERS INNER JOIN WELD_JOB ON WELD_JOB.WELDER_CLOCK_NUM = WELDERS.WELDER_CLOCK_NUM WHERE JOB_ID = " + AppConfiguration.getReportPK());
@@ -40,6 +38,7 @@ public class WeldProcessReportRequest implements EmailRequest{
             supervisor.setEmail(rsSupervisor.getString(2));
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "An error has occurred: The welder and/or supervisor has missing data. Please ensure that the welders table is filled out and try again.");
+            e.printStackTrace();
             System.exit(1);
         }
         welder.setRecipientId("1");
@@ -54,18 +53,11 @@ public class WeldProcessReportRequest implements EmailRequest{
         supervisorSignature.setAnchorXOffset(SUPERVISOR_ANCHOR_OFFSET_X);
         supervisorTabs.addSignHereTabsItem(supervisorSignature);
         supervisor.setTabs(supervisorTabs);
-        carbonCopy.setEmail("mkinder@flowserve.com");
-        carbonCopy.setName("Mike Kinder");
-        carbonCopy.setRecipientId("3");
-        carbonCopy.setRoutingOrder("3");
-
         Signer[] signers = {welder, supervisor};
-
-
 
         Document weldProcessReport = null;
         try {
-            weldProcessReport = EnvelopeHelpers.createDocumentFromFile(AppConfiguration.getFileName(), AppConfiguration.getFileName().substring(AppConfiguration.getFileName().lastIndexOf(File.separator) + 1), "1");
+            weldProcessReport = EnvelopeHelpers.createDocumentFromFile(AppConfiguration.getFileName(), AppConfiguration.getAppName(), "1");
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "An error has occurred: the document to be signed could not be loaded for some reason.");
             System.exit(1);
@@ -73,26 +65,19 @@ public class WeldProcessReportRequest implements EmailRequest{
         EnvelopeDefinition envelope = new EnvelopeDefinition();
         envelope.setEmailSubject("Please Sign This Weld Process Report Docusign Document");
         envelope.setDocuments(Collections.singletonList(weldProcessReport));
-        Recipients recipients = EnvelopeHelpers.createRecipients(signers);
-        //recipients.getCarbonCopies().add(carbonCopy);
-        envelope.setRecipients(recipients);
+        envelope.setRecipients(EnvelopeHelpers.createRecipients(signers));
         envelope.setStatus("sent");
 
-        ApiClient apiClient = new ApiClient("https://na3.docusign.net/restapi");
+        ApiClient apiClient = new ApiClient("https://demo.docusign.net/restapi");
         JWTGrantGetter jwt = new WeldProcessReportJWTGrantGetter();
         apiClient.setAccessToken(jwt.getToken(), (long) 3600);
         apiClient.addDefaultHeader("User-Agent", "Swagger-Codegen/3.11.0-RC2/java");
         EnvelopesApi envelopesApi = new EnvelopesApi(apiClient);
-
         try {
             envelopesApi.createEnvelope(AppConfiguration.getAPIAccountID(), envelope);
-
         } catch (ApiException e) {
             JOptionPane.showMessageDialog(null, "An error has occurred: API exception, envelope was not sent. This most likely means that the welder or supervisor does not have an email address set.");
-            e.printStackTrace();
             System.exit(1);
         }
-
     }
 }
-
