@@ -1,6 +1,11 @@
 *.json
 *.pdf
 *.accdb
+.idea
+*.jar
+*.war
+*.ear
+*.class
 Welding*Material*Control*Logs/**
 Welder*Matrix/**
 Welder*Continuity/**
