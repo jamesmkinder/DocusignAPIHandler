@@ -6,6 +6,8 @@
 *.war
 *.ear
 *.class
+*.iml
+DocusignAPIHandler/.gradle
 Welding*Material*Control*Logs/**
 Welder*Matrix/**
 Welder*Continuity/**
